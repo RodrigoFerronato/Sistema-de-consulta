@@ -851,6 +851,7 @@ tk.Label(login_window, text="Senha").grid(row=1, column=0, padx=10, pady=10)
 entry_password = tk.Entry(login_window, show='*')
 entry_password.grid(row=1, column=1, padx=10, pady=10)
 
+
 btn_login = tk.Button(login_window, text="Login", command=on_login)
 btn_login.grid(row=2, column=0, columnspan=2, pady=10)
 
@@ -982,6 +983,7 @@ def abrir_autenticacao_criacao_linha():
     tk.Label(janela_autenticacao, text="Nome de usuário").grid(row=0, column=0, padx=10, pady=10)
     entry_autenticacao_username = tk.Entry(janela_autenticacao)
     entry_autenticacao_username.grid(row=0, column=1, padx=10, pady=10)
+    entry_autenticacao_username.focus_set()
 
     tk.Label(janela_autenticacao, text="Senha").grid(row=1, column=0, padx=10, pady=10)
     entry_autenticacao_password = tk.Entry(janela_autenticacao, show='*')
@@ -1008,6 +1010,7 @@ def abrir_janela_criacao_linha():
     tk.Label(janela_criacao_linha, text="Nome da Nova Linha:").grid(row=0, column=0, padx=10, pady=10)
     entry_nome_linha = tk.Entry(janela_criacao_linha)
     entry_nome_linha.grid(row=0, column=1, padx=10, pady=10)
+    entry_nome_linha.focus_set()
 
     def criar_linha():
         nome_linha = entry_nome_linha.get().strip()
@@ -1029,6 +1032,7 @@ def preencher_codigos(nome_linha):
     tk.Label(janela_preenchimento, text="Insira os códigos dos produtos, separados por vírgula:").grid(row=0, column=0, padx=10, pady=10)
     entry_codigos = tk.Entry(janela_preenchimento, width=50)
     entry_codigos.grid(row=1, column=0, padx=10, pady=10)
+    entry_codigos.focus_set()
 
     def salvar_codigos():
         codigos = entry_codigos.get().split(',')
@@ -1058,6 +1062,7 @@ frame_principal.grid(row=0, column=0, sticky='nsew')
 # Cria o rótulo para a entrada de pesquisa
 rotulo_linha = ttk.Label(frame_principal, text="Linha:")
 rotulo_linha.grid(row=0, column=0, padx=10, pady=5, sticky='w')
+rotulo_linha.focus_set()
 
 # Cria a entrada de texto para pesquisa
 entrada_pesquisa = ttk.Entry(frame_principal, width=30)
