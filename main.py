@@ -1,12 +1,8 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
-from PIL import ImageDraw, ImageFont
-from tkinter import messagebox
-import sys
 import os
-
-
+import sys
 
 
 # Dicionário de produtos com o nome da linha como chave
@@ -807,7 +803,7 @@ def validate_credentials(username, password):
 # Função para lidar com o evento de login
 def on_login():
     username = entry_username.get()
-    password = entry_password.get()
+    password = entry_password.get()                                                                                                                                         
     if validate_credentials(username, password):
         messagebox.showinfo("Sucesso", "Login bem-sucedido!")
         login_window.destroy()
@@ -869,7 +865,7 @@ def pesquisar_produto(event=None):
     texto_pesquisa = entrada_pesquisa.get().lower()
     lista_produtos.delete(0, tk.END)
     lista_codigos.grid_remove()  # Esconde a lista de códigos
-
+    
     if texto_pesquisa:
         # Filtra linhas que contêm o texto pesquisado
         produtos_coincidentes = [produto for produto in produtos_por_linha if texto_pesquisa in produto.lower()]
@@ -979,6 +975,7 @@ class CarrosselImagens(tk.Frame):
 def abrir_autenticacao_criacao_linha():
     janela_autenticacao = tk.Toplevel(janela)
     janela_autenticacao.title("Autenticação para Criação de Linha")
+    centralizar_janela(janela_autenticacao)
 
     tk.Label(janela_autenticacao, text="Nome de usuário").grid(row=0, column=0, padx=10, pady=10)
     entry_autenticacao_username = tk.Entry(janela_autenticacao)
@@ -1006,6 +1003,7 @@ def abrir_autenticacao_criacao_linha():
 def abrir_janela_criacao_linha():
     janela_criacao_linha = tk.Toplevel(janela)
     janela_criacao_linha.title("Criar Nova Linha")
+    centralizar_janela(janela_criacao_linha)
 
     tk.Label(janela_criacao_linha, text="Nome da Nova Linha:").grid(row=0, column=0, padx=10, pady=10)
     entry_nome_linha = tk.Entry(janela_criacao_linha)
@@ -1028,6 +1026,7 @@ def abrir_janela_criacao_linha():
 def preencher_codigos(nome_linha):
     janela_preenchimento = tk.Toplevel(janela)
     janela_preenchimento.title(f"Preencher Códigos - {nome_linha}")
+    centralizar_janela(janela_preenchimento)
 
     tk.Label(janela_preenchimento, text="Insira os códigos dos produtos, separados por vírgula:").grid(row=0, column=0, padx=10, pady=10)
     entry_codigos = tk.Entry(janela_preenchimento, width=50)
@@ -1046,6 +1045,7 @@ def preencher_codigos(nome_linha):
 # Cria a janela principal
 janela = tk.Tk()
 janela.title("Pesquisa de Produtos")
+janela.focus_force()
 
 # Centralizar a janela principal na tela
 centralizar_janela(janela)
@@ -1065,10 +1065,11 @@ rotulo_linha.grid(row=0, column=0, padx=10, pady=5, sticky='w')
 rotulo_linha.focus_set()
 
 # Cria a entrada de texto para pesquisa
+
 entrada_pesquisa = ttk.Entry(frame_principal, width=30)
+entrada_pesquisa.focus_set()
 entrada_pesquisa.grid(row=0, column=1, padx=10, pady=5, sticky='w')
 entrada_pesquisa.bind("<KeyRelease>", pesquisar_produto)
-
 # Cria a lista de linhas (produtos) com tamanho constante
 lista_produtos = tk.Listbox(frame_principal, height=num_maximo_linhas)
 lista_produtos.grid(row=1, column=0, padx=10, pady=10, sticky='nsew')
@@ -1098,6 +1099,16 @@ lista_codigos.bind("<Down>", lambda event: lista_codigos.yview_scroll(1, "units"
 # Botão para abrir a janela de autenticação para criação de linha
 btn_criar_linha = tk.Button(janela, text="Criar Nova Linha", command=abrir_autenticacao_criacao_linha)
 btn_criar_linha.grid(row=1, column=0, pady=10)
-
+btn_criar_linha.focus_force
 # Executa o loop principal da aplicação
+
+# Função para focar a janela de pesquisa após um curto intervalo
+def focar_janela_pesquisa():
+    janela.focus_force()
+    entrada_pesquisa.focus_set()
+    
+# Agendar a função para focar a janela de pesquisa
+janela.after(50, focar_janela_pesquisa)
+
+# Iniciar o loop principal da janela
 janela.mainloop()
